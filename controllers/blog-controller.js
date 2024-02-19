@@ -1,4 +1,6 @@
+const { default: mongoose } = require("mongoose");
 const blogModel = require("../model/Blog");
+const userModel = require("../model/User");
 
 const getAllblog = async (req, res, next) => {
     let blogs;
@@ -16,6 +18,15 @@ const getAllblog = async (req, res, next) => {
 const addBlog = async (req, res, next) => {
     const {title, description, image, user} = req.body
     
+    let existingUser;
+    try {
+        existingUser = await userModel.findById(user)
+    } catch (err) {
+        return console.log(err)
+    }
+    if (!existingUser) {
+        return res.status(400).json({message: "Unable To find User By This Id"})
+    }
     const blog = new blogModel({
         title,
         description,
@@ -24,7 +35,12 @@ const addBlog = async (req, res, next) => {
     });
     
     try {
-        await blog.save();
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        await blog.save({session});
+        existingUser.blogs.push(blog);
+        await existingUser.save({session})
+        await session.commitTransaction();
     } catch (err) {
         return console.log(err)
     }
@@ -62,7 +78,7 @@ const deleteblog = async (req, res, next) => {
     if (!blog) {
         return res.status(500).json({message: "Unable to delete blog"})
     }
-    return res.status(200).json({blog});
+    return res.status(200).json({message: "Deleted Successfully"});
 }
 
 const getByid = async (req, res, next) => {

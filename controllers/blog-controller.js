@@ -42,7 +42,8 @@ const addBlog = async (req, res, next) => {
         await existingUser.save({session})
         await session.commitTransaction();
     } catch (err) {
-        return console.log(err)
+        console.log(err);
+        return res.status(500).json({message: err})
     }
     return res.status(201).json({blog})
 }
@@ -71,7 +72,9 @@ const deleteblog = async (req, res, next) => {
 
     let blog;
     try {
-        blog = await blogModel.findByIdAndDelete(blogId)
+        blog = await blogModel.findByIdAndDelete(blogId).populate("user");
+        await blog.user.blogs.pull(blog)
+        await blog.user.save()
     } catch (err) {
         return console.log(err)
     }
@@ -91,9 +94,24 @@ const getByid = async (req, res, next) => {
         console.log(err);
     }
     if (!blog) {
-        return res.status(500).json({message: "Blog Not Found"})
+        return res.status(404).json({message: "Blog Not Found"})
     }
     return res.status(200).json({blog});
+}
+
+const getByUserId = async (req, res, next) => {
+    const userId = req.params.id;
+
+    let userBlogs;
+    try {
+        userBlogs = await userModel.findById(userId).populate("blogs");
+    } catch(err) {
+        return console.log(err);
+    }
+    if (!userBlogs) {
+        return res.status(404).json({message: "No Blog Found"});
+    }
+    return res.status(200).json({userBlogs})
 }
 
 module.exports = {
@@ -101,5 +119,6 @@ module.exports = {
     addBlog,
     updateBlog,
     deleteblog,
-    getByid
+    getByid,
+    getByUserId
 }

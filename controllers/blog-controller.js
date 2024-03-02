@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const blogModel = require("../model/Blog");
 const userModel = require("../model/User");
+const path = require("path")
 
 const getAllblog = async (req, res, next) => {
     let blogs;
@@ -16,8 +17,12 @@ const getAllblog = async (req, res, next) => {
 };
 
 const addBlog = async (req, res, next) => {
-    const {title, description, image, user} = req.body
+    const {title, description, user} = req.body;
+    const image = req.file
     
+    if (!image) {
+        return res.status(400).json({message: "Upload image"});
+    }
     let existingUser;
     try {
         existingUser = await userModel.findById(user)
@@ -30,7 +35,7 @@ const addBlog = async (req, res, next) => {
     const blog = new blogModel({
         title,
         description,
-        image,
+        image: image.path,
         user
     });
     

@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const secretKey = process.env.TOKEN_KEY
 
-
+// Function to Get all Users
 const getAllUser = async(req, res, next) => {
     let users;
     try {
@@ -20,6 +20,7 @@ const getAllUser = async(req, res, next) => {
 };
 
 
+// Post users
 const signup = async(req, res, next) => {
     const {name, email, password} = req.body
 
@@ -53,6 +54,7 @@ const signup = async(req, res, next) => {
     return res.status(201).json({ user, token });
 }
 
+// Login Users
 const login = async (req, res, next) => {
     const {email, password} = req.body;
 

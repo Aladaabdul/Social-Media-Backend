@@ -5,12 +5,13 @@ const {connectTomongo} = require("./db");
 
 const PORT = 8000
 const app = express();
-// Coonecting to database
+// Connecting to database
 connectTomongo();
 app.use(express.json())
 
-
+//Route for user-related API endpoints
 app.use("/api/user", userRouter);
+// Route for blog-related API endpoints
 app.use("/api/blog", blogRouter);
 
 app.listen(PORT, ()=> {

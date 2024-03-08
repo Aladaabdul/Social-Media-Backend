@@ -1,11 +1,12 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
-
 const blogController = require("../controllers/blog-controller");
+const { authenticateToken } = require("../auth");
 
 const blogRouter = express.Router()
 
+// implement multer for adding image
 const storage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, 'uploads/');
@@ -20,7 +21,7 @@ const storage = multer.diskStorage({
 // Initialize Multer upload
 const upload = multer({ storage: storage });
 
-blogRouter.get("/", blogController.getAllblog);
+blogRouter.get("/", authenticateToken, blogController.getAllblog);
 blogRouter.post("/add", upload.single('image'), blogController.addBlog);
 blogRouter.put("/update/:id", blogController.updateBlog);
 blogRouter.delete("/delete/:id", blogController.deleteblog);

@@ -3,6 +3,7 @@ const blogModel = require("../model/Blog");
 const userModel = require("../model/User");
 const path = require("path")
 
+// Get all blog function
 const getAllblog = async (req, res, next) => {
     let blogs;
     try {
@@ -16,6 +17,7 @@ const getAllblog = async (req, res, next) => {
     return res.status(200).json({blogs});
 };
 
+// Add blog function
 const addBlog = async (req, res, next) => {
     const {title, description, user} = req.body;
     const image = req.file
@@ -104,6 +106,7 @@ const getByid = async (req, res, next) => {
     return res.status(200).json({blog});
 }
 
+// Get blog by user id
 const getByUserId = async (req, res, next) => {
     const userId = req.params.id;
 

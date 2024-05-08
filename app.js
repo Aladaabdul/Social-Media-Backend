@@ -14,6 +14,8 @@ app.use("/api/user", userRouter);
 // Route for blog-related API endpoints
 app.use("/api/blog", blogRouter);
 
+console.log("testing...")
+
 app.listen(PORT, ()=> {
     console.log(`http:\\localhost:${PORT}`)
 })

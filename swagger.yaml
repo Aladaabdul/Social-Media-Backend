@@ -1,0 +1,177 @@
+swagger: '2.0'
+info:
+  version: "1.0.0"
+  title: Social Media Backend API
+  description: Social Media Backend API documentation
+host: localhost:8000
+basePath: /api
+schemes:
+  - http
+
+definitions:
+  User:
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      blog:
+        type: array
+    required:
+      - name
+      - email
+      - paasword
+
+paths:
+  /user:
+    get:
+      summary: Returns list of all users
+      description: List all user endpoint
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success
+
+  /user/signup:
+    post:
+      summary: Create a new user
+      parameters:
+        - in: body
+          name: user
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        201:
+          description: Created Successfully
+  
+  /user/login:
+    post:
+      summary: Login an existing user
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: login user
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        201:
+          description: Created Successfully
+
+  
+  /blog:
+    get:
+      summary: Returns list of all blogs
+      description: List all blog endpoint
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success
+
+  /blog/add:
+    post:
+      summary: Create a new user blog
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: title
+          type: string
+          required: true
+          description: Blog title
+        - in: formData
+          name: description
+          type: string
+          required: true
+          description: Blog description
+        - in: formData
+          name: image
+          type: file
+          required: true
+          description: Blog description
+        - in: formData
+          name: user
+          type: string
+          required: true
+          description: id of user creating blog
+      responses:
+        201:
+          description: Created Successfully
+
+  /blog/{id}:
+    get:
+      summary: Gets a blog by ID
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: Id of blog to get
+      responses:
+        200:
+          description: Successful
+
+  /blog/delete/{id}:
+    delete:
+      summary: Delete existing blog by Id
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: Id of blog to delete
+      responses:
+        200:
+          description: Successful
+
+  /blog/update/{id}:
+    put:
+      summary: Update blog by Id
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: Blog Id
+        - in: formData
+          name: title
+          type: string
+          required: true
+          description: Update blog title
+        - in: formData
+          name: description
+          type: string
+          required: true
+          description: Update blog description
+      responses:
+        200:
+          description: Updated Successfully
+
+  /blog/user/{id}:
+    get:
+      summary: Gets all users blogs
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: Id of user
+      responses:
+        200:
+          description: Successful
+

@@ -7,7 +7,7 @@ const { authenticateToken } = require("../auth");
 const userRouter = express.Router();
 
 
-userRouter.get("/", authenticateToken, userController.getAllUser);
+userRouter.get("/", userController.getAllUser);
 userRouter.post("/signup", userController.signup);
 userRouter.post("/login", userController.login);
 

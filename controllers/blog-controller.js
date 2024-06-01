@@ -42,12 +42,15 @@ const addBlog = async (req, res, next) => {
     });
     
     try {
-        const session = await mongoose.startSession();
-        session.startTransaction();
-        await blog.save({session});
+        // const session = await mongoose.startSession();
+        // session.startTransaction();
+        // await blog.save({session});
+        // existingUser.blogs.push(blog);
+        // await existingUser.save({session})
+        // await session.commitTransaction();
+        await blog.save();
         existingUser.blogs.push(blog);
-        await existingUser.save({session})
-        await session.commitTransaction();
+        await existingUser.save();
     } catch (err) {
         console.log(err);
         return res.status(500).json({message: err})
@@ -58,6 +61,8 @@ const addBlog = async (req, res, next) => {
 const updateBlog = async (req, res, next) => {
     const blogId = req.params.id;
     const {title, description} = req.body;
+
+    console.log(blogId)
 
     let blog;
     try {

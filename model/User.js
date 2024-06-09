@@ -17,6 +17,14 @@ const UserModelSchema = new Schema({
         required: true,
         minlength: 6
     },
+    resetToken: {
+        type: String,
+        default: null
+    },
+    resetTokenExpires: {
+        type: Date,
+        default: null
+    },
     blogs: [{type: mongoose.Types.ObjectId, ref: "Blog", required: true}]
 })
 module.exports = mongoose.model("User", UserModelSchema)

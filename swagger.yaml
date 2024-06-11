@@ -70,6 +70,51 @@ paths:
         201:
           description: Created Successfully
 
+
+  /user/forgotpassword:
+    post:
+      summary: Forgot password Route
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: Forgot password endpoint
+          schema:
+            type: object
+            required:
+            - email
+            properties:
+              email:
+                type: string
+      responses:
+        201:
+          description: Password reset sent successfully
+
+  
+  /user/resetpassword:
+    post:
+      summary: Reset password Route
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: reset password endpoint
+          schema:
+            type: object
+            required:
+              - token
+              - newPassword
+            properties:
+              token:
+                type: string
+              newPassword:
+                type: string
+      responses:
+        201:
+          description: Password reset successfully
+
   
   /blog:
     get:

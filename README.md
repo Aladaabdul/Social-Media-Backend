@@ -33,7 +33,7 @@ The backend is built using Node.js, Express, MongoDB, and other supporting libra
   1. Clone the repository:
      
      ```bash 
-     git clone https://github.com/yourusername/social-media-backend.git
+     git clone https://github.com/Aladaabdul/Social-Media-Backend.git
      ```
   2. Navigate to the project directory:
 

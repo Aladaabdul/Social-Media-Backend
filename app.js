@@ -6,7 +6,7 @@ const userRouter = require("./routes/user-routes");
 const blogRouter = require("./routes/blog-routes");
 const {connectTomongo} = require("./db");
 
-const PORT = 8000
+const PORT = process.env.PORT || 8000
 const app = express();
 // Connecting to database
 connectTomongo();
@@ -19,8 +19,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/user", userRouter);
 // Route for blog-related API endpoints
 app.use("/api/blog", blogRouter);
-
-console.log("testing...")
 
 app.listen(PORT, ()=> {
     console.log(`http:\\localhost:${PORT}`)

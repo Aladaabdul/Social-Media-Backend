@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config()
 
-const MONGO_DB_CONNECT_URL = process.env.MONGO_DB_URL
+const MONGO_DB_CONNECT_URL = process.env.MONGO_DB_URL || 'mongodb://db:27017/Social_Media_Api'
 
 function connectTomongo() {
     mongoose.connect(MONGO_DB_CONNECT_URL)

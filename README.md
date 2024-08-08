@@ -1,7 +1,7 @@
 ### Social Media Backend
 This project is a backend application for a social media platform.
 It provides functionalities for user authentication, blog management, and password reset functionality.
-The backend is built using Node.js, Express, MongoDB, and other supporting libraries.
+The backend is built using Node.js, Express, MongoDB, Docker and other supporting libraries.
 
 ### Features
 - User Authentication (Sign Up, Login)
@@ -21,47 +21,26 @@ The backend is built using Node.js, Express, MongoDB, and other supporting libra
 - Nodemailer (for sending emails)
 - MailDev (for email testing during development)
 - Swagger (for API documentation)
+- Docker (for containerization)
 
 ### Getting Started
 
 ### Prerequisites
-  - Node.js (v14 or later)
-  - MongoDB
-  - MailDev (for email testing)
+  - Docker
+  - Docker Compose
 
-### Installation
-  1. Clone the repository:
-     
-     ```bash 
-     git clone https://github.com/Aladaabdul/Social-Media-Backend.git
-     ```
-  2. Navigate to the project directory:
+### Docker Setup
+   1. Ensure you have Docker and Docker Compose installed on your machine.
+   2. Create a .env file in the root of the project and add the following environment variables:
 
-     ```bash
-     cd social-media-backend
-     ```
-  3. Install dependencies:
+      `MONGO_DB_URL=mongodb://db:27017/social_media`
+      `JWT_SECRET=your_jwt_secret`
 
-     ```bash
-     npm install
-     ```
-  4. Create a .env file in the root of the project and add the following environment variables:
+   3. Build and start the containers using Docker Compose:
 
-     ```bash
-     MONGO_DB_URL=your_mongodb_connection_string
-     JWT_SECRET=your_jwt_secret
-     ```
-  5. Start MailDev:
+      `docker-compose up --build`
 
-     ```bash
-     npx maildev
-     ```
-  6. Run the application:
-
-     ```bash
-     npm start
-     ```
-     The server will start on `http://localhost:8000`.
+   The server will start on `http://localhost:8000`.
 
 ### API Documentation
 
